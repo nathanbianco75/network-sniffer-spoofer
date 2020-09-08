@@ -3,7 +3,7 @@
 Developing program capable of network packet sniffing and spoofing in C, for educational purposes.
 
 
-A small group project built with the intent of learning socket-level program.
+A small group project built with the intent of learning socket-level programming.
 
 References:
 -----------
