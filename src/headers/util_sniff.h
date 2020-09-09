@@ -211,7 +211,7 @@ void sniff(char *filter_exp, char *dev) {
 	/* print capture info */
 	printf("Device: %s\n", dev);
 	printf("Number of packets: %d\n", num_packets);
-	printf("Filter expression: %s\n", *filter_exp);
+	printf("Filter expression: %s\n", filter_exp);
 
 	/* open capture device */
 	handle = pcap_open_live(dev, SNAP_LEN, 1, 1000, errbuf);
