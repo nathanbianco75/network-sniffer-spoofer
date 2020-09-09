@@ -4,7 +4,7 @@ DEPS = src/headers/*.h
 OBJ = sniffer.o ethernet_header.o icmp_header.o ip_header.o simple_checksum.o tcp_header.o udp_header.o util_sniff.o
 
 %.o: %.c $(DEPS)
-        $(CC) $(CFLAGS) -c -o -lpcap $@ $<
+	$(CC) $(CFLAGS) -c -o -lpcap $@ $<
 
 go: $(OBJ)
-        gcc $(CFLAGS) -o $@ $^
+	gcc $(CFLAGS) -o $@ $^
