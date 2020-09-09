@@ -33,6 +33,7 @@ void print_app_usage(void) {
 
 int main(int argc, char **argv)
 {
+	char *dev = NULL;
 	if (argc == 2) {
 		dev = argv[1];
 	}
@@ -41,6 +42,6 @@ int main(int argc, char **argv)
 		print_app_usage();
 		exit(EXIT_FAILURE);
 	}
-	sniff(argc, argv);
+	sniff(dev);
 	return 0;
 }
