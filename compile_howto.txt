@@ -1,0 +1,7 @@
+Old Method for single .c file:
+	Example compiler command-line for GCC:
+		gcc -Wall -o sniffex sniffex.c -lpcap
+	
+Makefile way (two commands, first choose your makefile):
+	cp <Makefile name i.e. Makefile_sniffer.txt> Makefile
+	make
