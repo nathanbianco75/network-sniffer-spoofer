@@ -3,5 +3,6 @@ Old Method for single .c file:
 		gcc -Wall -o sniffex sniffex.c -lpcap
 	
 Makefile way (two commands, first choose your makefile):
+*RUN COMMANDS FROM "/network-sniffer-spoofer" DIRECTORY*
 	cp <Makefile name i.e. Makefile_sniffer.txt> Makefile
 	make
