@@ -180,11 +180,10 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	return;
 }
 
-void sniff(char *dev) {
+void sniff(char filter_exp[], char *dev) {
 	char errbuf[PCAP_ERRBUF_SIZE];		/* error buffer */
 	pcap_t *handle;				/* packet capture handle */
 
-	char filter_exp[] = "ip";		/* filter expression [3] */
 	struct bpf_program fp;			/* compiled filter program (expression) */
 	bpf_u_int32 mask;			/* subnet mask */
 	bpf_u_int32 net;			/* ip */

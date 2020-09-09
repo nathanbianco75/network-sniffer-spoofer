@@ -23,9 +23,10 @@
  * print help text
  */
 void print_app_usage(void) {
-	printf("Usage: sudo ./sniffer [interface]\n");
+	printf("Usage: sudo ./sniffer [filter] [interface]\n");
 	printf("\n");
 	printf("Options:\n");
+	printf("    filter       Sniff packet type <filter>.\n");
 	printf("    interface    Listen on <interface> for packets.\n");
 	printf("\n");
 }
@@ -33,15 +34,19 @@ void print_app_usage(void) {
 
 int main(int argc, char **argv)
 {
+	char filter_exp[] = "";		/* filter expression */
 	char *dev = NULL;
 	if (argc == 2) {
-		dev = argv[1];
+		filter_exp = argv[1];
 	}
-	else if (argc > 2) {
+	else if (argc == 3) {
+		dev = argv[2];
+	}
+	else if (argc > 3) {
 		fprintf(stderr, "error: unrecognized command-line options\n\n");
 		print_app_usage();
 		exit(EXIT_FAILURE);
 	}
-	sniff(dev);
+	sniff(filter_exp, dev);
 	return 0;
 }
