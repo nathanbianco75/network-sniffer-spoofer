@@ -6,5 +6,5 @@ OBJ = sniffer.o ethernet_header.o icmp_header.o ip_header.o simple_checksum.o tc
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o -lpcap $@ $<
 
-go: $(OBJ)
+sniffer: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
