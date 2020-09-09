@@ -7,4 +7,4 @@ OBJ = sniffer.o ethernet_header.o icmp_header.o ip_header.o simple_checksum.o tc
 	$(CC) $(CFLAGS) -c -o -lpcap $@ $<
 
 sniffer: $(OBJ)
-	gcc $(CFLAGS) -o $@ $^
+	gcc $(CFLAGS) sniffer.c -o $@ $^
