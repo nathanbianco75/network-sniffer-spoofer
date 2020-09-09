@@ -227,16 +227,16 @@ void sniff(char *filter_exp, char *dev) {
 	}
 
 	/* compile the filter expression */
-	if (pcap_compile(handle, &fp, *filter_exp, 0, net) == -1) {
+	if (pcap_compile(handle, &fp, filter_exp, 0, net) == -1) {
 		fprintf(stderr, "Couldn't parse filter %s: %s\n",
-		    *filter_exp, pcap_geterr(handle));
+		    filter_exp, pcap_geterr(handle));
 		exit(EXIT_FAILURE);
 	}
 
 	/* apply the compiled filter */
 	if (pcap_setfilter(handle, &fp) == -1) {
 		fprintf(stderr, "Couldn't install filter %s: %s\n",
-		    *filter_exp, pcap_geterr(handle));
+		    filter_exp, pcap_geterr(handle));
 		exit(EXIT_FAILURE);
 	}
 
