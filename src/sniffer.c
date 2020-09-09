@@ -32,12 +32,12 @@ void print_app_usage(void) {
 }
 
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	char filter_exp[] = "";		/* filter expression */
 	char *dev = NULL;
 	if (argc == 2) {
-		filter_exp = argv[1];
+		filter_exp = *argv[1];
 	}
 	else if (argc == 3) {
 		dev = argv[2];
