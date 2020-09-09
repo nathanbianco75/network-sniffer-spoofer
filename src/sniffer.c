@@ -23,7 +23,7 @@
  * print help text
  */
 void print_app_usage(void) {
-	printf("Usage: %s [interface]\n", APP_NAME);
+	printf("Usage: sudo ./sniffer [interface]\n");
 	printf("\n");
 	printf("Options:\n");
 	printf("    interface    Listen on <interface> for packets.\n");
