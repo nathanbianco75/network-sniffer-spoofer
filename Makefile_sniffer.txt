@@ -1,0 +1,2 @@
+sniffer: src/sniffer.c src/headers/*.h
+	gcc -Wall -o sniffer src/sniffer.c -lpcap

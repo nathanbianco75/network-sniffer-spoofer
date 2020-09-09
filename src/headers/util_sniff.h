@@ -180,8 +180,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	return;
 }
 
-void sniff(int argc, char **argv) {
-	char *dev = NULL;			/* capture device name */
+void sniff(char *dev) {
 	char errbuf[PCAP_ERRBUF_SIZE];		/* error buffer */
 	pcap_t *handle;				/* packet capture handle */
 
@@ -192,15 +191,7 @@ void sniff(int argc, char **argv) {
 	int num_packets = 10;			/* number of packets to capture */
 
 	/* check for capture device name on command-line */
-	if (argc == 2) {
-		dev = argv[1];
-	}
-	else if (argc > 2) {
-		fprintf(stderr, "error: unrecognized command-line options\n\n");
-		// print_app_usage();
-		exit(EXIT_FAILURE);
-	}
-	else {
+	if (dev == NULL) {
 		/* find a capture device if not specified on command-line */
 		dev = pcap_lookupdev(errbuf);
 		if (dev == NULL) {
