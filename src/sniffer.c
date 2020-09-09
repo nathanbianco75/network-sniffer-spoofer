@@ -21,6 +21,6 @@
 
 int main(int argc, char **argv)
 {
-	void sniff(argc, argv);
+	sniff(argc, argv);
 	return 0;
 }

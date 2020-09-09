@@ -13,11 +13,10 @@ struct ip_header {
 	unsigned char      iph_ttl;
 	unsigned char      iph_protocol;
 	unsigned short int iph_chksum;
-	unsigned int       iph_sourceip;
-	unsigned int       iph_destip;
+	struct  in_addr    iph_sourceip,iph_destip;  /* source and dest address */
 };
-#define IP_HL(ip)               (((ip)->ip_vhl) & 0x0f)
-#define IP_V(ip)                (((ip)->ip_vhl) >> 4)
+#define IP_HL(ip)               (ip -> iph_ihl)
+#define IP_V(ip)                (ip -> iph_ver)
 
 void gen_ip(struct ip_header *ip, unsigned short int len, unsigned char protocol, unsigned short int chksum, unsigned int sourceip, unsigned int destip) {
 	ip -> iph_ihl = 5;
@@ -30,8 +29,8 @@ void gen_ip(struct ip_header *ip, unsigned short int len, unsigned char protocol
 	ip -> iph_protocol = protocol;
 	//ip -> iph_chksum = 0; // Done by kernel
 	ip -> iph_chksum = chksum;
-	ip -> iph_sourceip = sourceip;
-	ip -> iph_destip = destip;
+	ip -> iph_sourceip.s_addr = inet_addr(sourceip);
+	ip -> iph_destip.s_addr = inet_addr(destip);
 }
 
 #endif // IP_H_

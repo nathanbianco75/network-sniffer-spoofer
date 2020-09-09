@@ -1,6 +1,9 @@
 #ifndef UTIL_SNIFF_H_
 #define UTIL_SNIFF_H_
 
+/* default snap length (maximum bytes per packet to capture) */
+#define SNAP_LEN 1518
+
 /*
  * print data in rows of 16 bytes: offset   hex   ascii
  *
@@ -98,9 +101,9 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	static int count = 1;                   /* packet counter */
 	
 	/* declare pointers to packet headers */
-	const struct sniff_ethernet *ethernet;  /* The ethernet header [1] */
-	const struct sniff_ip *ip;              /* The IP header */
-	const struct sniff_tcp *tcp;            /* The TCP header */
+	const struct ethernet_header *ethernet;  /* The ethernet header [1] */
+	const struct ip_header *ip;              /* The IP header */
+	const struct tcp_header *tcp;            /* The TCP header */
 	const char *payload;                    /* Packet payload */
 
 	int size_ip;
@@ -111,10 +114,10 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	count++;
 	
 	/* define ethernet header */
-	ethernet = (struct sniff_ethernet*)(packet);
+	ethernet = (struct ethernet_header*)(packet);
 	
 	/* define/compute ip header offset */
-	ip = (struct sniff_ip*)(packet + SIZE_ETHERNET);
+	ip = (struct ip_header*)(packet + SIZE_ETHERNET);
 	size_ip = IP_HL(ip)*4;
 	if (size_ip < 20) {
 		printf("   * Invalid IP header length: %u bytes\n", size_ip);
@@ -122,11 +125,11 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	}
 
 	/* print source and destination IP addresses */
-	printf("       From: %s\n", inet_ntoa(ip->ip_src));
-	printf("         To: %s\n", inet_ntoa(ip->ip_dst));
+	printf("       From: %s\n", inet_ntoa(ip->iph_sourceip));
+	printf("         To: %s\n", inet_ntoa(ip->iph_destip));
 	
 	/* determine protocol */	
-	switch(ip->ip_p) {
+	switch(ip->iph_protocol) {
 		case IPPROTO_TCP:
 			printf("   Protocol: TCP\n");
 			break;
@@ -149,21 +152,21 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	 */
 	
 	/* define/compute tcp header offset */
-	tcp = (struct sniff_tcp*)(packet + SIZE_ETHERNET + size_ip);
+	tcp = (struct tcp_header*)(packet + SIZE_ETHERNET + size_ip);
 	size_tcp = TH_OFF(tcp)*4;
 	if (size_tcp < 20) {
 		printf("   * Invalid TCP header length: %u bytes\n", size_tcp);
 		return;
 	}
 	
-	printf("   Src port: %d\n", ntohs(tcp->th_sport));
-	printf("   Dst port: %d\n", ntohs(tcp->th_dport));
+	printf("   Src port: %d\n", ntohs(tcp->tcph_srcport));
+	printf("   Dst port: %d\n", ntohs(tcp->tcph_destport));
 	
 	/* define/compute tcp payload (segment) offset */
 	payload = (u_char *)(packet + SIZE_ETHERNET + size_ip + size_tcp);
 	
 	/* compute tcp payload (segment) size */
-	size_payload = ntohs(ip->ip_len) - (size_ip + size_tcp);
+	size_payload = ntohs(ip->iph_len) - (size_ip + size_tcp);
 	
 	/*
 	 * Print payload data; it might be binary, so don't just

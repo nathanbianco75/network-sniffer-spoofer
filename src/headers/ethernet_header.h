@@ -13,9 +13,11 @@ struct ethernet_header {
         unsigned short int ether_type;                	/* IP? ARP? RARP? etc */
 };
 
-void gen_ether(struct ethernet_header *ether, unsigned char shost, unsigned char dhost, unsigned short int type) {
-	ether -> ether_shost = shost;
-	ether -> ether_dhost = dhost;
+void gen_ether(struct ethernet_header *ether, unsigned char shost[], unsigned char dhost[], unsigned short int type) {
+	for (int i = 0; i < ETHER_ADDR_LEN; i++) {
+		ether -> ether_shost[i] = shost[i];
+		ether -> ether_dhost[i] = dhost[i];
+	}
 	ether -> ether_type = type;
 }
 

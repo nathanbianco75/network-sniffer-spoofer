@@ -7,7 +7,8 @@ struct tcp_header {
 	unsigned short int tcph_destport;
 	unsigned int       tcph_seqnum;
 	unsigned int       tcph_acknum;
-	unsigned char      tcph_reserved:4, tcph_offset:4;
+	unsigned char  	   tcph_offx2:8;               /* data offset, rsvd */
+#define TH_OFF(th)      (((th)->tcph_offx2 & 0xf0) >> 4)
 	// unsigned char tcph_flags;
 	unsigned int
 	   tcp_res1:4,      /*little-endian*/
@@ -29,7 +30,7 @@ void gen_tcp(struct tcp_header *tcp, unsigned short int srcport, unsigned short 
 	tcp -> tcph_destport = destport;
 	tcp -> tcph_seqnum = htonl(1);
 	tcp -> tcph_acknum = 0;
-	tcp -> tcph_offset = 5;
+	tcp -> tcph_offx2 = 5;
 	tcp -> tcph_syn = 1;
 	tcp -> tcph_ack = 0;
 	tcp -> tcph_win = htons(32767);

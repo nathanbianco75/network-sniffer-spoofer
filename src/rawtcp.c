@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
 			csum((unsigned short *) buffer,
 			(sizeof(struct ip_header)
 				+ sizeof(struct tcp_header))),	// checksum, using simple_checksum
-			inet_addr(argv[1]),					// source/sender ip
-			inet_addr(argv[3])					// destination/receiver ip
+			argv[1],							// source/sender ip
+			argv[3]								// destination/receiver ip
 			);
 
 	// TCP Setup
