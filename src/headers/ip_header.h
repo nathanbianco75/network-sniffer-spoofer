@@ -16,6 +16,8 @@ struct ip_header {
 	unsigned int       iph_sourceip;
 	unsigned int       iph_destip;
 };
+#define IP_HL(ip)               (((ip)->ip_vhl) & 0x0f)
+#define IP_V(ip)                (((ip)->ip_vhl) >> 4)
 
 void gen_ip(struct ip_header *ip, unsigned short int len, unsigned char protocol, unsigned short int chksum, unsigned int sourceip, unsigned int destip) {
 	ip -> iph_ihl = 5;
