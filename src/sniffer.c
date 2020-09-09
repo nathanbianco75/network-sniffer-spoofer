@@ -34,7 +34,7 @@ void print_app_usage(void) {
 
 int main(int argc, char *argv[])
 {
-	char  *filter_exp = NULL;		/* filter expression */
+	char  *filter_exp = new char[]("");		/* filter expression */
 	char *dev = NULL;
 	if (argc == 2) {
 		filter_exp = argv[1];
